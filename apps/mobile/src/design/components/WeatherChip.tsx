@@ -1,4 +1,16 @@
-import { Cloud, CloudRain, CloudSun, Snowflake, Sun, type LucideIcon } from 'lucide-react-native';
+import {
+  Cloud,
+  CloudFog,
+  CloudLightning,
+  CloudMoon,
+  CloudRain,
+  CloudSun,
+  Moon,
+  Snowflake,
+  Sun,
+  Wind,
+  type LucideIcon,
+} from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
@@ -7,19 +19,35 @@ import { Icon } from './Icon';
 import { PressableArea } from './PressableArea';
 import { Text } from './Text';
 
-export type WeatherCondition = 'clear' | 'partlyCloudy' | 'cloudy' | 'rain' | 'snow';
+export type WeatherCondition =
+  | 'clear'
+  | 'clearNight'
+  | 'partlyCloudy'
+  | 'partlyCloudyNight'
+  | 'cloudy'
+  | 'fog'
+  | 'windy'
+  | 'rain'
+  | 'snow'
+  | 'thunderstorm';
 
 const conditionIcon: Record<WeatherCondition, LucideIcon> = {
   clear: Sun,
+  clearNight: Moon,
   partlyCloudy: CloudSun,
+  partlyCloudyNight: CloudMoon,
   cloudy: Cloud,
+  fog: CloudFog,
+  windy: Wind,
   rain: CloudRain,
   snow: Snowflake,
+  thunderstorm: CloudLightning,
 };
 
 type Props = {
   temperatureC: number;
-  condition: WeatherCondition;
+  /** Omitted when the source has no condition: show the temperature alone. */
+  condition?: WeatherCondition;
   /** Opens the source credit (DWD via Bright Sky). */
   onPress?: () => void;
 };
@@ -27,17 +55,17 @@ type Props = {
 export function WeatherChip({ temperatureC, condition, onPress }: Props) {
   const { t } = useTranslation();
   const styles = useStyles();
-  const conditionLabel = t(`weather.${condition}`);
-  const text = `${Math.round(temperatureC)}° · ${conditionLabel}`;
-  const label = t('weather.a11y', {
-    temperature: Math.round(temperatureC),
-    condition: conditionLabel,
-  });
+  const degrees = Math.round(temperatureC);
+  const conditionLabel = condition ? t(`weather.${condition}`) : undefined;
+  const text = conditionLabel ? `${degrees}° · ${conditionLabel}` : `${degrees}°`;
+  const label = conditionLabel
+    ? t('weather.a11y', { temperature: degrees, condition: conditionLabel })
+    : t('weather.a11yTemperatureOnly', { temperature: degrees });
 
   const body = (
     <View style={styles.chip}>
-      <Icon icon={conditionIcon[condition]} size="sm" color="textSecondary" />
-      <Text variant="caption" color="textSecondary">
+      {condition && <Icon icon={conditionIcon[condition]} size="sm" color="textSecondary" />}
+      <Text variant="callout" color="textSecondary">
         {text}
       </Text>
     </View>

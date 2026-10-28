@@ -3,22 +3,23 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 
 import { useColors } from '@/design/theme';
-import { env } from '@/lib/env';
 
 import { MUNICH_CENTER } from './constants';
+import { useMapStyle } from './useMapStyle';
 
 /**
- * Scaffold spike (slice 1): proves the native MapLibre module renders in a dev
- * build. Clustering, filters and our own basemap come in slice 7.
+ * Native MapLibre map for dev/production builds. Clustering, filters and our
+ * own basemap come in slice 7.
  * Only import this through CityMap, which keeps it out of Expo Go.
  */
 export default function NativeCityMap() {
   const { t } = useTranslation();
   const colors = useColors();
+  const mapStyle = useMapStyle();
   return (
     <Map
       style={styles.map}
-      mapStyle={env.EXPO_PUBLIC_MAP_STYLE_URL}
+      mapStyle={mapStyle}
       accessibilityLabel={t('map.a11yLabel')}
       // Attribution stays on: OSM data requires a visible credit (docs/DATA_SOURCES.md).
       attribution

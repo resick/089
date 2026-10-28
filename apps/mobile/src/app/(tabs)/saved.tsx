@@ -1,8 +1,3 @@
-import { useTranslation } from 'react-i18next';
+import { SavedScreen } from '@/features/saved/SavedScreen';
 
-import { PlaceholderScreen } from '@/design/PlaceholderScreen';
-
-export default function SavedScreen() {
-  const { t } = useTranslation();
-  return <PlaceholderScreen title={t('tabs.saved')} slice={11} />;
-}
+export default SavedScreen;

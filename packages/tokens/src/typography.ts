@@ -11,6 +11,8 @@ export type TypeStyle = {
 };
 
 export const typeScale = {
+  /** Large numerals only, e.g. the live clock on Explore. */
+  hero: { fontSize: 56, lineHeight: 60, fontWeight: 700, letterSpacing: -2 },
   display: { fontSize: 34, lineHeight: 40, fontWeight: 700, letterSpacing: -0.5 },
   title1: { fontSize: 28, lineHeight: 34, fontWeight: 700, letterSpacing: -0.3 },
   title2: { fontSize: 22, lineHeight: 28, fontWeight: 600, letterSpacing: -0.2 },

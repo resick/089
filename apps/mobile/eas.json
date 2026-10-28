@@ -16,7 +16,8 @@
       "env": {
         "APP_ENV": "local",
         "EXPO_PUBLIC_APP_ENV": "local",
-        "EXPO_PUBLIC_MAP_STYLE_URL": "https://demotiles.maplibre.org/style.json"
+        "EXPO_PUBLIC_MAP_STYLE_URL": "https://tiles.openfreemap.org/styles/dark",
+        "EXPO_PUBLIC_MAP_STYLE_URL_LIGHT": "https://tiles.openfreemap.org/styles/positron"
       }
     },
     "development-simulator": {

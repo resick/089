@@ -5,4 +5,5 @@ import { mobilePublicEnvSchema, parseEnv } from '@089/core';
 export const env = parseEnv(mobilePublicEnvSchema, {
   EXPO_PUBLIC_APP_ENV: process.env.EXPO_PUBLIC_APP_ENV,
   EXPO_PUBLIC_MAP_STYLE_URL: process.env.EXPO_PUBLIC_MAP_STYLE_URL,
+  EXPO_PUBLIC_MAP_STYLE_URL_LIGHT: process.env.EXPO_PUBLIC_MAP_STYLE_URL_LIGHT,
 });

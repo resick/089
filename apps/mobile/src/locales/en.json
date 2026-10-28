@@ -5,13 +5,8 @@
     "events": "Events",
     "saved": "Saved"
   },
-  "placeholder": {
-    "comingInSlice": "Coming in roadmap slice {{slice}}."
-  },
   "map": {
-    "a11yLabel": "Map of Munich",
-    "webUnavailable": "The map is only available in the iOS and Android app.",
-    "expoGoUnavailable": "The map needs the full app build and isn't available in Expo Go."
+    "a11yLabel": "Map of Munich"
   },
   "categories": {
     "food": "Food & Drinks",
@@ -27,7 +22,10 @@
   },
   "search": {
     "placeholder": "Search places, events, areas",
-    "clear": "Clear search"
+    "clear": "Clear search",
+    "cancel": "Cancel",
+    "emptyTitle": "Search is coming",
+    "emptyBody": "Once Munich's places are imported (slice {{slice}}), you'll find places, events and neighbourhoods here."
   },
   "save": {
     "add": "Save",
@@ -55,7 +53,14 @@
     "rain": "Rain",
     "snow": "Snow",
     "a11y": "Weather: {{temperature}} degrees, {{condition}}",
-    "sourceHint": "Shows where the weather data comes from"
+    "sourceHint": "Shows where the weather data comes from",
+    "clearNight": "Clear",
+    "partlyCloudyNight": "Partly cloudy",
+    "fog": "Fog",
+    "windy": "Windy",
+    "thunderstorm": "Thunderstorm",
+    "a11yTemperatureOnly": "Weather: {{temperature}} degrees",
+    "credit": "Weather data: Deutscher Wetterdienst (DWD), via Bright Sky · station {{station}}"
   },
   "hours": {
     "todayA11y": "Today, {{day}}: {{hours}}"
@@ -83,5 +88,45 @@
   },
   "gallery": {
     "open": "Open component gallery"
+  },
+  "common": {
+    "back": "Back"
+  },
+  "explore": {
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Hello, Munich",
+      "evening": "Good evening",
+      "night": "Still up?"
+    },
+    "dayPart": {
+      "morning": "Morning in Munich",
+      "afternoon": "Afternoon in Munich",
+      "evening": "Evening in Munich",
+      "night": "Night in Munich"
+    },
+    "timeA11y": "It's {{time}} in Munich",
+    "categoriesTitle": "Categories",
+    "categoriesSubtitle": "What are you in the mood for?",
+    "weatherCredit": "Weather: Deutscher Wetterdienst (DWD) via Bright Sky"
+  },
+  "category": {
+    "emptyTitle": "No places yet",
+    "emptyBody": "Munich's places from OpenStreetMap arrive with roadmap slice {{slice}}."
+  },
+  "events": {
+    "title": "Events",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "emptyTitle": "No events listed for {{day}} yet",
+    "emptyBody": "The events calendar arrives with roadmap slice {{slice}}.",
+    "todayInSentence": "today",
+    "tomorrowInSentence": "tomorrow"
+  },
+  "saved": {
+    "title": "Saved",
+    "emptyTitle": "Nothing saved yet",
+    "emptyBody": "Tap the bookmark on any place or event to keep it here. Lists and shareable plans arrive with slice {{slice}}.",
+    "browse": "Explore Munich"
   }
 }

@@ -1,8 +1,3 @@
-import { useTranslation } from 'react-i18next';
+import { EventsScreen } from '@/features/events/EventsScreen';
 
-import { PlaceholderScreen } from '@/design/PlaceholderScreen';
-
-export default function EventsScreen() {
-  const { t } = useTranslation();
-  return <PlaceholderScreen title={t('tabs.events')} slice={10} />;
-}
+export default EventsScreen;

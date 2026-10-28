@@ -10,7 +10,10 @@ export type AppEnv = z.infer<typeof appEnvSchema>;
  */
 export const mobilePublicEnvSchema = z.object({
   EXPO_PUBLIC_APP_ENV: appEnvSchema.default('local'),
+  /** Basemap style for dark mode (the default). */
   EXPO_PUBLIC_MAP_STYLE_URL: z.url(),
+  /** Basemap style for light mode. */
+  EXPO_PUBLIC_MAP_STYLE_URL_LIGHT: z.url(),
 });
 export type MobilePublicEnv = z.infer<typeof mobilePublicEnvSchema>;
 

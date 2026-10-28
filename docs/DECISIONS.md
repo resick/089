@@ -85,3 +85,9 @@ _Why:_ with the dev client installed, Expo's QR code targets the custom dev buil
 
 **ADR-027 · 2026-10-28 · accepted** — **Sheets are Expo Router screens with `presentation: 'formSheet'`**, not `@gorhom/bottom-sheet`. Motion uses React Native's `Animated` with the native driver; Reanimated and Gesture Handler are not installed yet.
 _Why:_ gorhom hasn't confirmed support for Gesture Handler 3 (the version Expo SDK 58 ships), while native sheets give detents, drag-to-dismiss and screen-reader support for free and run in Expo Go. Fewer dependencies. Revisit: slice 7, if the map preview sheet needs a persistent "peek" that native sheets can't do.
+
+**ADR-028 · 2026-10-28 · accepted** — **Interim basemap: OpenFreeMap** (`dark` / `positron` styles), and in **Expo Go the map renders with MapLibre GL JS 5.24.0 in a WebView** (the web preview uses the same page in an iframe). Dev and production builds keep native MapLibre with the same styles.
+_Why:_ the owner tests in Expo Go, which can't load native MapLibre, and the demo style had no street detail. OpenFreeMap allows commercial use with no keys or limits (checked 2026-10-28). MapLibre GL 6 loads its worker from a separate cross-origin file, which fails in an origin-less WebView/iframe; 5.x inlines it. Revisit: slice 7 (self-hosted Protomaps style, clustering, pins).
+
+**ADR-029 · 2026-10-28 · accepted** — **Explore shows live weather by calling Bright Sky from the app** (TanStack Query, 30-minute cache, zod-validated response, DWD credit shown) until slice 9 moves it behind our cached endpoint. TanStack Query is added now (ARCHITECTURE §1).
+_Why:_ real, useful data on the home screen before the place database exists, with no fabricated content. At development scale the extra calls are negligible; Bright Sky needs no key. Revisit: slice 9.

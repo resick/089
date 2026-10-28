@@ -5,13 +5,8 @@
     "events": "Events",
     "saved": "Gespeichert"
   },
-  "placeholder": {
-    "comingInSlice": "Kommt in Abschnitt {{slice}} der Roadmap."
-  },
   "map": {
-    "a11yLabel": "Karte von München",
-    "webUnavailable": "Die Karte ist nur in der iOS- und Android-App verfügbar.",
-    "expoGoUnavailable": "Die Karte braucht die vollständige App und ist in Expo Go nicht verfügbar."
+    "a11yLabel": "Karte von München"
   },
   "categories": {
     "food": "Essen & Trinken",
@@ -27,7 +22,10 @@
   },
   "search": {
     "placeholder": "Orte, Events, Viertel suchen",
-    "clear": "Suche löschen"
+    "clear": "Suche löschen",
+    "cancel": "Abbrechen",
+    "emptyTitle": "Die Suche kommt bald",
+    "emptyBody": "Sobald die Münchner Orte importiert sind (Abschnitt {{slice}}), findest du hier Orte, Events und Viertel."
   },
   "save": {
     "add": "Speichern",
@@ -55,7 +53,14 @@
     "rain": "Regen",
     "snow": "Schnee",
     "a11y": "Wetter: {{temperature}} Grad, {{condition}}",
-    "sourceHint": "Zeigt die Quelle der Wetterdaten"
+    "sourceHint": "Zeigt die Quelle der Wetterdaten",
+    "clearNight": "Klar",
+    "partlyCloudyNight": "Teils bewölkt",
+    "fog": "Nebel",
+    "windy": "Windig",
+    "thunderstorm": "Gewitter",
+    "a11yTemperatureOnly": "Wetter: {{temperature}} Grad",
+    "credit": "Wetterdaten: Deutscher Wetterdienst (DWD), via Bright Sky · Station {{station}}"
   },
   "hours": {
     "todayA11y": "Heute, {{day}}: {{hours}}"
@@ -83,5 +88,45 @@
   },
   "gallery": {
     "open": "Komponenten-Galerie öffnen"
+  },
+  "common": {
+    "back": "Zurück"
+  },
+  "explore": {
+    "greeting": {
+      "morning": "Guten Morgen",
+      "afternoon": "Hallo, München",
+      "evening": "Guten Abend",
+      "night": "Noch wach?"
+    },
+    "dayPart": {
+      "morning": "Morgens in München",
+      "afternoon": "Nachmittags in München",
+      "evening": "Abends in München",
+      "night": "Nachts in München"
+    },
+    "timeA11y": "Es ist {{time}} Uhr in München",
+    "categoriesTitle": "Kategorien",
+    "categoriesSubtitle": "Worauf hast du Lust?",
+    "weatherCredit": "Wetter: Deutscher Wetterdienst (DWD) via Bright Sky"
+  },
+  "category": {
+    "emptyTitle": "Noch keine Orte",
+    "emptyBody": "Die Münchner Orte aus OpenStreetMap kommen mit Abschnitt {{slice}} der Roadmap."
+  },
+  "events": {
+    "title": "Events",
+    "today": "Heute",
+    "tomorrow": "Morgen",
+    "emptyTitle": "Noch keine Events für {{day}}",
+    "emptyBody": "Der Eventkalender kommt mit Abschnitt {{slice}} der Roadmap.",
+    "todayInSentence": "heute",
+    "tomorrowInSentence": "morgen"
+  },
+  "saved": {
+    "title": "Gespeichert",
+    "emptyTitle": "Noch nichts gespeichert",
+    "emptyBody": "Tippe bei Orten und Events auf das Lesezeichen, um sie hier zu sammeln. Listen und teilbare Pläne kommen mit Abschnitt {{slice}}.",
+    "browse": "München entdecken"
   }
 }

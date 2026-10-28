@@ -14,6 +14,7 @@ Verification method used on **2026-10-28**: the provider's official docs/terms p
 | Wikidata                          | Landmark/museum facts, translations, IDs        | CC0                                                 | ✅ Use                                                         |
 | Wikimedia Commons                 | Photos of landmarks                             | Per file (CC BY / BY-SA / PD)                       | ✅ Use with per-image credit; avoid BY-SA in composited images |
 | Protomaps basemap                 | Map tiles                                       | OSM-derived (ODbL attribution) + Protomaps code BSD | ✅ Use (self-hosted)                                           |
+| OpenFreeMap                       | Map tiles + styles (interim, until slice 7)     | OSM data (ODbL) via OpenMapTiles schema             | ✅ Use (interim)                                               |
 | MVV GTFS                          | Transit stops (and later routing)               | CC BY                                               | ✅ Use                                                         |
 | Bright Sky (DWD)                  | Weather                                         | DWD data CC BY 4.0                                  | ✅ Use                                                         |
 | Munich Open Data portal           | Selected datasets                               | dl-de/by-2.0 mostly                                 | 🔍 Per-dataset                                                 |
@@ -64,6 +65,13 @@ Verification method used on **2026-10-28**: the provider's official docs/terms p
 - **Cost:** storage + bandwidth only (Cloudflare R2: no egress fees). The hosted Protomaps API requires GitHub sponsorship for commercial use, so we self-host.
 - **Verified:** 2026-10-28 — search only (protomaps.com FAQ/about + case study). Re-check attribution docs at slice 7.
 
+### OpenFreeMap (interim basemap)
+
+- **Gives:** hosted vector tiles and ready-made styles (we use `dark` and `positron`) from OSM data, OpenMapTiles schema.
+- **Terms (checked 2026-10-28 on openfreemap.org):** free; commercial use explicitly allowed; "no limits on the number of map views or requests"; no registration, API keys or cookies. Runs on donations: donate once we earn money.
+- **Attribution:** required. MapLibre adds it automatically ("OpenFreeMap © OpenMapTiles Data from OpenStreetMap"); keep the attribution control on.
+- **Use:** interim basemap for every map in the app (native MapLibre, the Expo Go WebView and the web preview) until our self-hosted Protomaps style in slice 7 (ADR-028). A public service with no SLA, so it is not the production plan.
+
 ### MVV GTFS (Münchner Verkehrs- und Tarifverbund)
 
 - **Gives:** full-network timetable feed (S-Bahn, U-Bahn, tram, bus, regional trains): stops, routes, times. MVP uses `stops.txt` for "nearest stops".
@@ -76,7 +84,7 @@ Verification method used on **2026-10-28**: the provider's official docs/terms p
 
 - **Gives:** current weather, hourly forecast, alerts, radar for Germany, as JSON.
 - **Licence:** Bright Sky is free for all purposes and needs no API key. The underlying DWD data falls under DWD terms: **CC BY 4.0** with source acknowledgement. Credit: "Wetterdaten: Deutscher Wetterdienst (DWD), via Bright Sky".
-- **Rate limits:** none stated. We call it once per 30 min per city from an Edge Function; clients never call it directly.
+- **Rate limits:** none stated. Target design: one call per 30 min per city from an Edge Function. **Interim (ADR-029):** the app calls `current_weather` directly, cached for 30 min per device, until slice 9. Live call checked 2026-10-28 (station Muenchen-Stadt).
 - **Verified:** 2026-10-28 — brightsky.dev (checked); DWD terms of use PDF (search, dated May 2024). Check dwd.de/copyright for exact credit wording.
 
 ### Munich Open Data portal (opendata.muenchen.de)

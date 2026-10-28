@@ -5,7 +5,8 @@ City discovery app, Munich first. Product spec: `docs/PRODUCT_SPEC.md`. Planning
 ## Current state
 
 - Planning docs approved 2026-10-28. Building Phase 1 slice by slice in the order of `docs/ROADMAP.md`, **stopping for the owner's review after each slice**.
-- Slices 1 (scaffold) and 2 (design system) done. Slice 2 pending the owner's review on a phone (gallery: Explore → "Open component gallery"). Next: slice 3 (database).
+- Slices 1 (scaffold) and 2 (design system) done and committed. Since then: designed Explore (live clock + DWD weather + categories), Events (day strip), Saved, Search and category screens with honest empty states, and a real map in Expo Go (ADR-028/029).
+- Next: slice 3 (database). **Blocked on the owner** creating a free Supabase project `089-dev` in Frankfurt.
 
 ## How to work here (from spec Part 0)
 
@@ -26,6 +27,8 @@ City discovery app, Munich first. Product spec: `docs/PRODUCT_SPEC.md`. Planning
 - Styling only through design tokens (`packages/tokens`); no raw colours/sizes in components. Build screens from `@/design/components`; style with `makeStyles((t) => …)` from `@/design/theme`; render text only with `<Text variant color>`.
 - A pressable never contains another pressable (DESIGN_SYSTEM §5). Put secondary actions (Save) beside the card's pressable area.
 - Gallery and tests use obvious fixtures from `src/features/gallery/fixtures.ts`.
+- Screens use `<Screen>` (safe area, gutter, section rhythm). Until a feature has real data, it shows a designed `EmptyState` saying which roadmap slice brings it: never fake content.
+- External API responses are zod-validated at the boundary (see `features/weather/brightSky.ts`).
 - All user-facing strings go through i18n (`de` and `en` both required; CI checks for missing keys).
 - Timestamps are `timestamptz`; city-time logic uses the city's timezone (`Europe/Berlin`), never the device's.
 - Business logic with ranking/geo/time lives in versioned Postgres RPCs (`*_v1`). Clients don't compose complex queries.
@@ -70,6 +73,9 @@ Later slices add: `supabase start`, `supabase db reset`, `pnpm --filter ingest r
 - The public Overpass API is overloaded and not for production use; ingestion uses Geofabrik extracts.
 
 ## Gotchas
+
+- After changing `.env.local`, restart Metro: Expo reads env files only at startup, and hot reload can leave a stale bundle.
+- Jest has no `.env.local`; `apps/mobile/jest.env.js` sets obviously-fake public env values for tests.
 
 - React Native Testing Library 14: `fireEvent` and `render` are async. Always `await` them, or later tests fail with "overlapping act() calls".
 - Jest can't load `lucide-react-native`'s ESM build; `moduleNameMapper` in `apps/mobile/package.json` points it at the CJS build.
