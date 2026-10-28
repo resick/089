@@ -1,0 +1,6 @@
+pnpm-lock.yaml
+docs/PRODUCT_SPEC.md
+.expo/
+.next/
+dist/
+coverage/

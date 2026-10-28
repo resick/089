@@ -1,0 +1,15 @@
+{
+  "tabs": {
+    "explore": "Entdecken",
+    "map": "Karte",
+    "events": "Events",
+    "saved": "Gespeichert"
+  },
+  "placeholder": {
+    "comingInSlice": "Kommt in Abschnitt {{slice}} der Roadmap."
+  },
+  "map": {
+    "a11yLabel": "Karte von München",
+    "webUnavailable": "Die Karte ist nur in der iOS- und Android-App verfügbar."
+  }
+}

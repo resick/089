@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Lint, typecheck, test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4 # reads the version from package.json "packageManager"
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  build:
+    name: Build web + bundle mobile
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: checks
+    env:
+      NEXT_PUBLIC_APP_ENV: local
+      NEXT_PUBLIC_SITE_URL: http://localhost:3089
+      EXPO_PUBLIC_APP_ENV: local
+      EXPO_PUBLIC_MAP_STYLE_URL: https://demotiles.maplibre.org/style.json
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @089/web build
+      # Bundles JS for both platforms with Metro: catches resolution and
+      # monorepo errors without needing a native build.
+      - run: pnpm --filter @089/mobile export:check

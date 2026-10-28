@@ -1,0 +1,11 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+  - 'services/*'
+
+# Packages allowed to run install scripts (pnpm 10 blocks them by default).
+onlyBuiltDependencies:
+  - '@maplibre/maplibre-react-native'
+  - esbuild
+  - sharp
+  - unrs-resolver

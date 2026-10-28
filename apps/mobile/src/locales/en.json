@@ -1,0 +1,15 @@
+{
+  "tabs": {
+    "explore": "Explore",
+    "map": "Map",
+    "events": "Events",
+    "saved": "Saved"
+  },
+  "placeholder": {
+    "comingInSlice": "Coming in roadmap slice {{slice}}."
+  },
+  "map": {
+    "a11yLabel": "Map of Munich",
+    "webUnavailable": "The map is only available in the iOS and Android app."
+  }
+}
