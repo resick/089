@@ -8,7 +8,6 @@
   "scripts": {
     "dev": "turbo run dev",
     "dev:mobile": "pnpm --filter @089/mobile start",
-    "dev:go": "pnpm --filter @089/mobile start:go",
     "dev:web": "pnpm --filter @089/web dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
