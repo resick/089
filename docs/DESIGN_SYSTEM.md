@@ -2,7 +2,7 @@
 
 **Direction:** dark-first, image-led when we have images, typography-led when we don't. Munich's civic colours are **black and gold**, so the brand is near-black surfaces with one gold accent. It reads as local without folklore (no lederhosen, no blue-white diamonds).
 
-Tokens live in `packages/tokens` (TypeScript), are exported to the mobile theme (Unistyles) and to web CSS variables. Components never use raw values.
+Tokens live in `packages/tokens` (TypeScript), are exported to the mobile theme hooks and to web CSS variables. Components never use raw values.
 
 ## 1. Colour
 

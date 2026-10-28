@@ -10,6 +10,7 @@
   },
   "map": {
     "a11yLabel": "Map of Munich",
-    "webUnavailable": "The map is only available in the iOS and Android app."
+    "webUnavailable": "The map is only available in the iOS and Android app.",
+    "expoGoUnavailable": "The map needs the full app build and isn't available in Expo Go."
   }
 }

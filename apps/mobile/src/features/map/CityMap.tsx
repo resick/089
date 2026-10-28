@@ -1,34 +1,25 @@
-import { Camera, Map } from '@maplibre/maplibre-react-native';
+import { lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { View } from 'react-native';
 
 import { useColors } from '@/design/theme';
-import { env } from '@/lib/env';
+import { isExpoGo } from '@/lib/runtime';
 
-import { MUNICH_CENTER } from './constants';
+import { MapUnavailable } from './MapUnavailable';
 
-/**
- * Scaffold spike (slice 1): proves the native MapLibre module renders in a dev
- * build. Clustering, filters and our own basemap come in slice 7.
- */
+// Loaded lazily so the MapLibre native module is never touched in Expo Go,
+// where it doesn't exist and would crash the app on import.
+const NativeCityMap = lazy(() => import('./NativeCityMap'));
+
 export function CityMap() {
   const { t } = useTranslation();
   const colors = useColors();
+
+  if (isExpoGo) return <MapUnavailable message={t('map.expoGoUnavailable')} />;
+
   return (
-    <Map
-      style={styles.map}
-      mapStyle={env.EXPO_PUBLIC_MAP_STYLE_URL}
-      accessibilityLabel={t('map.a11yLabel')}
-      // Attribution stays on: OSM data requires a visible credit (docs/DATA_SOURCES.md).
-      attribution
-      logo={false}
-      tintColor={colors.accentText}
-    >
-      <Camera initialViewState={{ center: MUNICH_CENTER, zoom: 12 }} />
-    </Map>
+    <Suspense fallback={<View style={{ flex: 1, backgroundColor: colors.bg }} />}>
+      <NativeCityMap />
+    </Suspense>
   );
 }
-
-const styles = StyleSheet.create({
-  map: { flex: 1 },
-});

@@ -22,6 +22,7 @@ City discovery app, Munich first. Product spec: `docs/PRODUCT_SPEC.md`. Planning
 ## Conventions
 
 - TypeScript strict everywhere; no `any` (use `unknown` + zod). Shared schemas/types in `packages/core`; DB types generated into `packages/db` (never hand-edited).
+- **Expo Go compatibility (ADR-025):** only use native modules that Expo Go includes. Anything else (today: MapLibre) is lazy-loaded behind `isExpoGo` from `src/lib/runtime.ts` with a designed fallback, and gets a test proving it isn't loaded in Expo Go (see `CityMap.test.tsx`).
 - Styling only through design tokens (`packages/tokens`); no raw colours/sizes in components.
 - All user-facing strings go through i18n (`de` and `en` both required; CI checks for missing keys).
 - Timestamps are `timestamptz`; city-time logic uses the city's timezone (`Europe/Berlin`), never the device's.
@@ -36,18 +37,19 @@ City discovery app, Munich first. Product spec: `docs/PRODUCT_SPEC.md`. Planning
 
 Run from the repo root. pnpm is pinned in `package.json` (`packageManager`); on this machine call it as `corepack pnpm …` (see Gotchas).
 
-| Command                                                             | What it does                                                         |
-| ------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `pnpm install`                                                      | Install all workspaces                                               |
-| `pnpm check`                                                        | Lint + typecheck + test everything (what CI's first job runs)        |
-| `pnpm lint` / `pnpm typecheck` / `pnpm test`                        | Individually, via Turborepo                                          |
-| `pnpm format` / `pnpm format:check`                                 | Prettier (CI fails on unformatted files)                             |
-| `pnpm dev:web`                                                      | Next.js on http://localhost:3089                                     |
-| `pnpm dev:mobile`                                                   | Metro for the dev client (needs a dev build installed on the device) |
-| `pnpm --filter @089/web build`                                      | Production web build                                                 |
-| `pnpm --filter @089/mobile export:check`                            | Metro-bundle iOS + Android JS (no native toolchain needed)           |
-| `pnpm --filter @089/mobile doctor`                                  | expo-doctor: SDK version alignment and config checks                 |
-| `npx eas-cli@latest build --profile development --platform android` | Cloud dev build (run inside `apps/mobile`; needs Expo login)         |
+| Command                                                             | What it does                                                           |
+| ------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `pnpm install`                                                      | Install all workspaces                                                 |
+| `pnpm check`                                                        | Lint + typecheck + test everything (what CI's first job runs)          |
+| `pnpm lint` / `pnpm typecheck` / `pnpm test`                        | Individually, via Turborepo                                            |
+| `pnpm format` / `pnpm format:check`                                 | Prettier (CI fails on unformatted files)                               |
+| `pnpm dev:web`                                                      | Next.js on http://localhost:3089                                       |
+| `pnpm dev:go`                                                       | Metro for **Expo Go** (iPhone/Android, no dev build): scan the QR code |
+| `pnpm dev:mobile`                                                   | Metro for the dev client (needs a dev build installed on the device)   |
+| `pnpm --filter @089/web build`                                      | Production web build                                                   |
+| `pnpm --filter @089/mobile export:check`                            | Metro-bundle iOS + Android JS (no native toolchain needed)             |
+| `pnpm --filter @089/mobile doctor`                                  | expo-doctor: SDK version alignment and config checks                   |
+| `npx eas-cli@latest build --profile development --platform android` | Cloud dev build (run inside `apps/mobile`; needs Expo login)           |
 
 First-time setup: copy `apps/mobile/.env.example` → `apps/mobile/.env.local` and `apps/web/.env.example` → `apps/web/.env.local`.
 

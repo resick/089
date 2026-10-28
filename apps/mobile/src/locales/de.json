@@ -10,6 +10,7 @@
   },
   "map": {
     "a11yLabel": "Karte von München",
-    "webUnavailable": "Die Karte ist nur in der iOS- und Android-App verfügbar."
+    "webUnavailable": "Die Karte ist nur in der iOS- und Android-App verfügbar.",
+    "expoGoUnavailable": "Die Karte braucht die vollständige App und ist in Expo Go nicht verfügbar."
   }
 }

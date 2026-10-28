@@ -44,7 +44,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   experiments: {
     reactCompiler: true,
   },
+  owner: 'resick',
   extra: {
     appEnv: variant,
+    eas: { projectId: 'bb83ed95-7983-4e28-8f23-39f18d60b58a' },
   },
 });

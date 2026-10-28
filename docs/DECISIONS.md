@@ -17,7 +17,7 @@ _Why:_ EU hosting for GDPR, relational + geo in one place, small ops burden, pla
 **ADR-004 · 2026-10-28 · accepted** — **pnpm workspaces + Turborepo** monorepo with `apps/mobile`, `apps/web`, `packages/*`, `services/ingest`, `supabase/`.
 _Why:_ shared zod schemas/tokens/types across app, web, CMS and ingestion. Alternatives: Nx, separate repos.
 
-**ADR-005 · 2026-10-28 · accepted** — Styling with **react-native-unistyles v3**; fallback plain `StyleSheet` + typed theme hook.
+**ADR-005 · 2026-10-28 · superseded by ADR-025** — Styling with **react-native-unistyles v3**; fallback plain `StyleSheet` + typed theme hook.
 _Why:_ typed tokens and themes, theme switching without re-renders, close to the RN StyleSheet API (low lock-in). Alternatives: Tamagui, NativeWind, Restyle (ARCHITECTURE §1). Revisit: if it's incompatible with the Expo SDK at slice 1.
 
 **ADR-006 · 2026-10-28 · accepted** — **MapLibre RN + self-hosted Protomaps basemap on Cloudflare R2/Worker.**
@@ -65,7 +65,7 @@ _Why:_ references Munich's civic colours (black and gold) without folklore; cont
 **ADR-020 · 2026-10-28 · accepted** — Toolchain pins for slice 1: **Expo SDK 58** (React Native 0.88.0, React 19.3), **TypeScript ~6.0** (the version Expo pins; TS 7 is out but typescript-eslint supports < 6.1), **ESLint 9** (eslint-config-expo/next presets aren't verified on ESLint 10 yet), **pnpm 10.34** (latest is 12.x; 10 has the build-script allowlist we rely on and well-known behaviour), **Next.js 16.4**, **Vitest 5** for packages, **jest-expo + Testing Library** for the app.
 _Why:_ follow each framework's supported versions rather than the newest release. Revisit: at each Expo SDK upgrade.
 
-**ADR-021 · 2026-10-28 · accepted** — Unistyles installation **moves to slice 2** (design system). The scaffold uses plain `StyleSheet` + a `useColors()` hook over `@089/tokens`.
+**ADR-021 · 2026-10-28 · superseded by ADR-025** — Unistyles installation **moves to slice 2** (design system). The scaffold uses plain `StyleSheet` + a `useColors()` hook over `@089/tokens`.
 _Why:_ it is a native module that can only be verified in a dev build, and slice 2 is where the theme is built; installing it now would be untested weight. ADR-005 still stands.
 
 **ADR-022 · 2026-10-28 · proposed** — **Placeholder app identifiers** `app.muc089` (+ `.dev`, `.staging`) and URL scheme `muc089`.
@@ -76,3 +76,6 @@ _Why:_ free, no key, enough to prove the native module renders. Replaced by the 
 
 **ADR-024 · 2026-10-28 · accepted** — Expo Router **typed routes off** for now.
 _Why:_ the generated route types only exist after `expo start`, which CI doesn't run; enabling them needs a CI step that generates them. Revisit: slice 6, when real navigation between screens starts.
+
+**ADR-025 · 2026-10-28 · accepted** — **Keep the app runnable in Expo Go until launch.** Styling uses React Native `StyleSheet` + typed theme hooks over `@089/tokens` (replaces Unistyles, ADR-005/021). Local storage uses `expo-sqlite/kv-store` instead of react-native-mmkv. **Any native module that Expo Go doesn't include (today: MapLibre) must be lazy-loaded behind `isExpoGo` (`src/lib/runtime.ts`) with a designed fallback.**
+_Why:_ the owner tests on an iPhone without an Apple Developer account ($99/yr) until launch; Expo Go is free. Android dev builds (EAS) still cover the full app including the map. Cost: no Unistyles theme-switch optimisation — acceptable at our screen count. Revisit: at launch, when iOS dev builds become available.
