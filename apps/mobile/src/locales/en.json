@@ -12,5 +12,76 @@
     "a11yLabel": "Map of Munich",
     "webUnavailable": "The map is only available in the iOS and Android app.",
     "expoGoUnavailable": "The map needs the full app build and isn't available in Expo Go."
+  },
+  "categories": {
+    "food": "Food & Drinks",
+    "nightlife": "Nightlife",
+    "entertainment": "Entertainment",
+    "culture": "Culture & Arts",
+    "tourism": "Sights",
+    "activities": "Activities",
+    "outdoors": "Outdoors & Nature",
+    "shopping": "Shopping",
+    "wellness": "Wellness",
+    "events": "Events"
+  },
+  "search": {
+    "placeholder": "Search places, events, areas",
+    "clear": "Clear search"
+  },
+  "save": {
+    "add": "Save",
+    "remove": "Remove from saved"
+  },
+  "event": {
+    "cancelled": "Cancelled"
+  },
+  "collection": {
+    "items_one": "{{count}} item",
+    "items_other": "{{count}} items"
+  },
+  "sponsored": {
+    "label": "Sponsored",
+    "withSponsor": "Sponsored · {{sponsor}}"
+  },
+  "attribution": {
+    "lastVerified": "Last verified: {{date}}",
+    "sources": "Sources: {{sources}}"
+  },
+  "weather": {
+    "clear": "Sunny",
+    "partlyCloudy": "Partly cloudy",
+    "cloudy": "Cloudy",
+    "rain": "Rain",
+    "snow": "Snow",
+    "a11y": "Weather: {{temperature}} degrees, {{condition}}",
+    "sourceHint": "Shows where the weather data comes from"
+  },
+  "hours": {
+    "todayA11y": "Today, {{day}}: {{hours}}"
+  },
+  "transit": {
+    "a11y": "{{name}}, {{modes}}, {{minutes}} minutes on foot",
+    "walkMinutes_one": "{{count}} min",
+    "walkMinutes_other": "{{count}} min",
+    "credit": "Timetable data: MVV"
+  },
+  "error": {
+    "retry": "Try again",
+    "offline": {
+      "title": "No connection",
+      "body": "Check your internet connection and try again."
+    },
+    "server": {
+      "title": "Something went wrong",
+      "body": "It's on our side, not yours. Please try again in a moment."
+    }
+  },
+  "offline": {
+    "banner": "Offline: showing saved info",
+    "bannerWithTime": "Offline: showing saved info from {{time}}"
+  },
+  "gallery": {
+    "open": "Open component gallery"
   }
 }

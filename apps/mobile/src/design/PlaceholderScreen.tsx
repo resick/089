@@ -1,32 +1,41 @@
-import { StyleSheet, Text, View } from 'react-native';
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import { View } from 'react-native';
 
-import { useColors } from './theme';
+import { Text } from './components/Text';
+import { makeStyles } from './theme';
 
 type Props = {
   title: string;
   /** Roadmap slice that builds this screen (docs/ROADMAP.md). */
   slice: number;
+  children?: ReactNode;
 };
 
 /** Scaffold-only stand-in for screens that later slices build. */
-export function PlaceholderScreen({ title, slice }: Props) {
+export function PlaceholderScreen({ title, slice, children }: Props) {
   const { t } = useTranslation();
-  const colors = useColors();
+  const styles = useStyles();
   return (
-    <View style={[styles.container, { backgroundColor: colors.bg }]}>
-      <Text accessibilityRole="header" style={[styles.title, { color: colors.text }]}>
+    <View style={styles.container}>
+      <Text variant="title1" accessibilityRole="header" align="center">
         {title}
       </Text>
-      <Text style={[styles.body, { color: colors.textSecondary }]}>
+      <Text variant="body" color="textSecondary" align="center">
         {t('placeholder.comingInSlice', { slice })}
       </Text>
+      {children}
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 16, gap: 8 },
-  title: { fontSize: 28, lineHeight: 34, fontWeight: '700' },
-  body: { fontSize: 16, lineHeight: 24, textAlign: 'center' },
-});
+const useStyles = makeStyles((t) => ({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: t.space.md,
+    gap: t.space.xs,
+    backgroundColor: t.colors.bg,
+  },
+}));

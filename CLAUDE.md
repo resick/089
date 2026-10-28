@@ -5,7 +5,7 @@ City discovery app, Munich first. Product spec: `docs/PRODUCT_SPEC.md`. Planning
 ## Current state
 
 - Planning docs approved 2026-10-28. Building Phase 1 slice by slice in the order of `docs/ROADMAP.md`, **stopping for the owner's review after each slice**.
-- Slice 1 (scaffold) done, pending review. Next: slice 2 (design system).
+- Slices 1 (scaffold) and 2 (design system) done. Slice 2 pending the owner's review on a phone (gallery: Explore → "Open component gallery"). Next: slice 3 (database).
 
 ## How to work here (from spec Part 0)
 
@@ -23,7 +23,9 @@ City discovery app, Munich first. Product spec: `docs/PRODUCT_SPEC.md`. Planning
 
 - TypeScript strict everywhere; no `any` (use `unknown` + zod). Shared schemas/types in `packages/core`; DB types generated into `packages/db` (never hand-edited).
 - **Expo Go compatibility (ADR-025):** only use native modules that Expo Go includes. Anything else (today: MapLibre) is lazy-loaded behind `isExpoGo` from `src/lib/runtime.ts` with a designed fallback, and gets a test proving it isn't loaded in Expo Go (see `CityMap.test.tsx`).
-- Styling only through design tokens (`packages/tokens`); no raw colours/sizes in components.
+- Styling only through design tokens (`packages/tokens`); no raw colours/sizes in components. Build screens from `@/design/components`; style with `makeStyles((t) => …)` from `@/design/theme`; render text only with `<Text variant color>`.
+- A pressable never contains another pressable (DESIGN_SYSTEM §5). Put secondary actions (Save) beside the card's pressable area.
+- Gallery and tests use obvious fixtures from `src/features/gallery/fixtures.ts`.
 - All user-facing strings go through i18n (`de` and `en` both required; CI checks for missing keys).
 - Timestamps are `timestamptz`; city-time logic uses the city's timezone (`Europe/Berlin`), never the device's.
 - Business logic with ranking/geo/time lives in versioned Postgres RPCs (`*_v1`). Clients don't compose complex queries.
@@ -68,6 +70,13 @@ Later slices add: `supabase start`, `supabase db reset`, `pnpm --filter ingest r
 - The public Overpass API is overloaded and not for production use; ingestion uses Geofabrik extracts.
 
 ## Gotchas
+
+- React Native Testing Library 14: `fireEvent` and `render` are async. Always `await` them, or later tests fail with "overlapping act() calls".
+- Jest can't load `lucide-react-native`'s ESM build; `moduleNameMapper` in `apps/mobile/package.json` points it at the CJS build.
+- React Compiler lint (`react-hooks/refs`) forbids `useRef(new Animated.Value()).current`. Use `const [value] = useState(() => new Animated.Value(0))`.
+- RN 0.88 no longer exports `StyleSheet.NamedStyles`; `makeStyles` types itself from `Parameters<typeof StyleSheet.create>`.
+- Pass `disabled={x || undefined}` to `Pressable`: a literal `false` overrides `accessibilityState.disabled`.
+- On web the app renders nothing until Inter loads (native keeps the splash screen up instead).
 
 - `corepack enable` fails here (no write access to `C:\Program Files\nodejs`), and the global `pnpm` is 9.x. Use `corepack pnpm …` to get the pinned 10.x. Turborepo calls the global pnpm for scripts, which is fine.
 - pnpm refuses to reinstall without a TTY; set `CI=true` (and `--no-frozen-lockfile` when the lockfile must change).

@@ -82,3 +82,6 @@ _Why:_ the owner tests on an iPhone without an Apple Developer account ($99/yr) 
 
 **ADR-026 · 2026-10-28 · accepted** — **Remove `expo-dev-client`**; `npx expo start` runs the app in Expo Go on iPhone and Android.
 _Why:_ with the dev client installed, Expo's QR code targets the custom dev build, which confused testing on an iPhone (the camera opened it as a web link). Expo Go is the owner's test path until launch (ADR-025). The Android dev build from 2026-10-28 (with the real map) stays installable, but needs `expo-dev-client` re-added and a new build to connect again. Revisit: when we need the map on a device again (slice 7) or at launch.
+
+**ADR-027 · 2026-10-28 · accepted** — **Sheets are Expo Router screens with `presentation: 'formSheet'`**, not `@gorhom/bottom-sheet`. Motion uses React Native's `Animated` with the native driver; Reanimated and Gesture Handler are not installed yet.
+_Why:_ gorhom hasn't confirmed support for Gesture Handler 3 (the version Expo SDK 58 ships), while native sheets give detents, drag-to-dismiss and screen-reader support for free and run in Expo Go. Fewer dependencies. Revisit: slice 7, if the map preview sheet needs a persistent "peek" that native sheets can't do.

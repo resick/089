@@ -82,9 +82,13 @@ Built in this order and shown in the gallery in every state (default, pressed, d
 1. Primitives: `Text` (token-only variants), `Icon`, `Pressable` (haptics + 44pt), `Divider`, `Skeleton`
 2. Controls: `Button`, `IconButton`, `Chip`, `SegmentedControl`, `Toggle`, `SearchBar`
 3. Content: `PlaceCard` (L/M/S), `PlaceListItem`, `EventCard`, `EventListItem`, `CollectionCard`, `CategoryTile`, `StatusLine`, `HoursTable`, `AttributeBlock`, `TransitStops`, `WeatherChip`, `SponsoredLabel`, `AttributionFooter`, `Avatar`, `ListRow`
-4. Containers: `Sheet`, `FilterSheet`, `SectionHeader`, `Toast`, `OfflineBanner`
+4. Containers: `SheetContent` (sheets are native `formSheet` routes, ADR-027), `SectionHeader`, `Toast`, `OfflineBanner`. `FilterSheet` comes with filters in slice 9.
 5. States: `EmptyState` (icon + title + one sentence + one action), `ErrorState` (offline vs server, retry)
-6. Map: `MapPin`, `ClusterPin`, `UserLocationDot`, `SearchAreaPill`
+6. Map: `MapPin`, `ClusterPin`, `UserLocationDot`, `SearchAreaPill` (slice 7)
+
+`AttributeBlock` waits for category attribute schemas (slice 6). `EventListItem` is `EventCard layout="row"`; the S size of `PlaceCard` is `PlaceListItem`.
+
+**Interactive nesting rule:** a pressable never contains another pressable (invalid on web, unreachable for screen readers). Secondary actions such as Save sit beside the card's pressable area.
 
 ## 6. Motion
 

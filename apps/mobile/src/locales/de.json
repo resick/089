@@ -12,5 +12,76 @@
     "a11yLabel": "Karte von München",
     "webUnavailable": "Die Karte ist nur in der iOS- und Android-App verfügbar.",
     "expoGoUnavailable": "Die Karte braucht die vollständige App und ist in Expo Go nicht verfügbar."
+  },
+  "categories": {
+    "food": "Essen & Trinken",
+    "nightlife": "Nachtleben",
+    "entertainment": "Unterhaltung",
+    "culture": "Kultur & Kunst",
+    "tourism": "Sehenswürdigkeiten",
+    "activities": "Aktivitäten",
+    "outdoors": "Natur & Draußen",
+    "shopping": "Shopping",
+    "wellness": "Wellness",
+    "events": "Events"
+  },
+  "search": {
+    "placeholder": "Orte, Events, Viertel suchen",
+    "clear": "Suche löschen"
+  },
+  "save": {
+    "add": "Speichern",
+    "remove": "Nicht mehr speichern"
+  },
+  "event": {
+    "cancelled": "Abgesagt"
+  },
+  "collection": {
+    "items_one": "{{count}} Eintrag",
+    "items_other": "{{count}} Einträge"
+  },
+  "sponsored": {
+    "label": "Anzeige",
+    "withSponsor": "Anzeige · {{sponsor}}"
+  },
+  "attribution": {
+    "lastVerified": "Zuletzt geprüft: {{date}}",
+    "sources": "Quellen: {{sources}}"
+  },
+  "weather": {
+    "clear": "Sonnig",
+    "partlyCloudy": "Teils bewölkt",
+    "cloudy": "Bewölkt",
+    "rain": "Regen",
+    "snow": "Schnee",
+    "a11y": "Wetter: {{temperature}} Grad, {{condition}}",
+    "sourceHint": "Zeigt die Quelle der Wetterdaten"
+  },
+  "hours": {
+    "todayA11y": "Heute, {{day}}: {{hours}}"
+  },
+  "transit": {
+    "a11y": "{{name}}, {{modes}}, {{minutes}} Minuten zu Fuß",
+    "walkMinutes_one": "{{count}} Min.",
+    "walkMinutes_other": "{{count}} Min.",
+    "credit": "Fahrplandaten: MVV"
+  },
+  "error": {
+    "retry": "Erneut versuchen",
+    "offline": {
+      "title": "Keine Verbindung",
+      "body": "Prüfe deine Internetverbindung und versuche es noch einmal."
+    },
+    "server": {
+      "title": "Da ist etwas schiefgelaufen",
+      "body": "Das liegt an uns, nicht an dir. Versuche es gleich noch einmal."
+    }
+  },
+  "offline": {
+    "banner": "Offline: gespeicherte Infos werden angezeigt",
+    "bannerWithTime": "Offline: gespeicherte Infos von {{time}}"
+  },
+  "gallery": {
+    "open": "Komponenten-Galerie öffnen"
   }
 }

@@ -25,7 +25,7 @@ Ticketmaster commercial-use request · trademark search "089" · decide legal en
 
 ### Slice 2 · Design system (2 wk)
 
-- **Deliverables:** tokens per DESIGN_SYSTEM.md (dark + light); Inter + Lucide; typed theme hooks (StyleSheet, ADR-025); component set §5 groups 1–5 (map pins in slice 7); component gallery screen; screenshot tests for the gallery.
+- **Deliverables:** tokens per DESIGN_SYSTEM.md (dark + light); Inter + Lucide; typed theme hooks (StyleSheet, ADR-025); component set §5 groups 1–5 (map pins in slice 7); component gallery screen; render + accessibility tests per component (pixel screenshot tests need a device farm: deferred, the gallery is reviewed by eye on a phone instead).
 - **Accept:** every component in both themes, at 200% text, with a11y labels; contrast pairs come only from tokens; gallery reviewed by you.
 
 ### Slice 3 · Database core (1.5 wk)
