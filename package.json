@@ -15,10 +15,14 @@
     "test": "turbo run test",
     "check": "turbo run lint typecheck test",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "db:push": "supabase db push --linked",
+    "db:test": "node supabase/scripts/test-linked.mjs",
+    "db:types": "supabase gen types typescript --linked --schema public > packages/db/src/database.types.ts"
   },
   "devDependencies": {
     "prettier": "3.9.10",
+    "supabase": "2.122.0",
     "turbo": "2.11.10",
     "typescript": "~6.0.3"
   }

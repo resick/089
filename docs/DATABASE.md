@@ -209,6 +209,8 @@ Every policy has a pgTAP test that checks access as anon, as another user and as
 - **Never `db push` to production from a laptop.** CI applies migrations to staging on merge to `main`, and to production on a release tag after a manual approval.
 - **Expand → migrate → contract** for breaking changes (add column → backfill → switch readers → drop old), so older app versions keep working. Mobile apps stay installed for months, so RPC signatures are versioned (`explore_sections_v1`).
 - `supabase gen types typescript` runs in CI, and the output is committed to `packages/db`. CI fails if the generated types differ from the committed ones.
-- **Seeds:** `seed/categories.sql` (real taxonomy, all environments). `seed/fixtures.sql` (local/test only: "Test Place 1"… inside a fake city, clearly not real data).
+- **Reference data and fixtures (ADR-031):** real reference data every environment needs (Munich, the category taxonomy, tags) is a data migration (`…_reference_data.sql`). `supabase/seed.sql` holds only fake local fixtures ("Test Place 1"… in the made-up city Testburg) and is never pushed to a hosted project.
+- **Helpers** (`is_i18n`, `is_slug`, `is_editor`, `is_admin`, triggers) live in the `private` schema, which the Data API doesn't expose. Grants are explicit per table.
+- **Tests:** pgTAP files in `supabase/tests/database/`, each one transaction that rolls back. CI runs them on a fresh Docker database.
 - **Backups:** Supabase Pro daily backups. Add PITR when the editorial layer becomes valuable (before public launch). Weekly `pg_dump` of the editorial tables to private R2 storage as a provider-exit copy.
 - **Account deletion:** an `on delete cascade` from `auth.users` covers user-owned rows. A `delete_my_account()` RPC also removes media and anonymises reports. Required by GDPR Art. 17 and App Store 5.1.1(v).

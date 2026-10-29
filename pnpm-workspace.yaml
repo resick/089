@@ -8,4 +8,5 @@ onlyBuiltDependencies:
   - '@maplibre/maplibre-react-native'
   - esbuild
   - sharp
+  - supabase
   - unrs-resolver

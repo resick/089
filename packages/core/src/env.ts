@@ -5,6 +5,15 @@ export const appEnvSchema = z.enum(APP_ENVS);
 export type AppEnv = z.infer<typeof appEnvSchema>;
 
 /**
+ * Supabase publishable key (`sb_publishable_…`). Only this key format is
+ * accepted, so a secret key (`sb_secret_…`) or a legacy service_role JWT can't
+ * end up in a client bundle by mistake (CLAUDE.md rule 5).
+ */
+export const supabasePublishableKeySchema = z
+  .string()
+  .regex(/^sb_publishable_[\w-]+$/, 'must be a Supabase publishable key (sb_publishable_…)');
+
+/**
  * Variables that are safe to ship inside the mobile app bundle.
  * Never add secrets here: everything in this schema is public.
  */
@@ -14,6 +23,9 @@ export const mobilePublicEnvSchema = z.object({
   EXPO_PUBLIC_MAP_STYLE_URL: z.url(),
   /** Basemap style for light mode. */
   EXPO_PUBLIC_MAP_STYLE_URL_LIGHT: z.url(),
+  /** Supabase project URL, e.g. https://<ref>.supabase.co. */
+  EXPO_PUBLIC_SUPABASE_URL: z.url(),
+  EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: supabasePublishableKeySchema,
 });
 export type MobilePublicEnv = z.infer<typeof mobilePublicEnvSchema>;
 
@@ -21,6 +33,8 @@ export type MobilePublicEnv = z.infer<typeof mobilePublicEnvSchema>;
 export const webPublicEnvSchema = z.object({
   NEXT_PUBLIC_APP_ENV: appEnvSchema.default('local'),
   NEXT_PUBLIC_SITE_URL: z.url(),
+  NEXT_PUBLIC_SUPABASE_URL: z.url(),
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: supabasePublishableKeySchema,
 });
 export type WebPublicEnv = z.infer<typeof webPublicEnvSchema>;
 

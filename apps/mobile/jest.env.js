@@ -3,3 +3,5 @@
 process.env.EXPO_PUBLIC_APP_ENV = 'local';
 process.env.EXPO_PUBLIC_MAP_STYLE_URL = 'https://tiles.example.test/dark.json';
 process.env.EXPO_PUBLIC_MAP_STYLE_URL_LIGHT = 'https://tiles.example.test/light.json';
+process.env.EXPO_PUBLIC_SUPABASE_URL = 'https://test-project.supabase.example.test';
+process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_test-key';

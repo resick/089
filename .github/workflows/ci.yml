@@ -41,6 +41,11 @@ jobs:
       EXPO_PUBLIC_APP_ENV: local
       EXPO_PUBLIC_MAP_STYLE_URL: https://tiles.openfreemap.org/styles/dark
       EXPO_PUBLIC_MAP_STYLE_URL_LIGHT: https://tiles.openfreemap.org/styles/positron
+      # Placeholders: the build only needs values that pass validation.
+      EXPO_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+      EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci-placeholder
+      NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci-placeholder
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
@@ -53,3 +58,27 @@ jobs:
       # Bundles JS for both platforms with Metro: catches resolution and
       # monorepo errors without needing a native build.
       - run: pnpm --filter @089/mobile export:check
+
+  database:
+    name: Database (migrations, RLS tests, types)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Starts only Postgres (Docker), applying every migration and seed.sql
+      # from scratch: proves `supabase db reset` reproduces the schema.
+      - run: pnpm exec supabase db start
+      - run: pnpm exec supabase test db
+      # The committed types come from the hosted project, whose PostgREST
+      # version differs from the local image's, so that one line is ignored.
+      - name: Generated types match the schema
+        run: |
+          pnpm exec supabase gen types typescript --local --schema public > /tmp/database.types.ts
+          diff <(grep -v PostgrestVersion packages/db/src/database.types.ts) \
+               <(grep -v PostgrestVersion /tmp/database.types.ts)

@@ -6,7 +6,8 @@ City discovery app, Munich first. Product spec: `docs/PRODUCT_SPEC.md`. Planning
 
 - Planning docs approved 2026-10-28. Building Phase 1 slice by slice in the order of `docs/ROADMAP.md`, **stopping for the owner's review after each slice**.
 - Slices 1 (scaffold) and 2 (design system) done and committed. Since then: designed Explore (live clock + DWD weather + categories), Events (day strip), Saved, Search and category screens with honest empty states, and a real map in Expo Go (ADR-028/029).
-- Next: slice 3 (database). **Blocked on the owner** creating a free Supabase project `089-dev` in Frankfurt.
+- Slice 3 (database core) built 2026-10-29, pending review: migrations in `supabase/migrations`, pushed to the hosted project `089-dev` (ADR-030/031); 56 pgTAP tests pass there. Places stay empty until slice 4 (ingestion). Code is on GitHub: `resick/089` (private).
+- Next: slice 4 (ingestion pipeline), after the owner's review.
 
 ## How to work here (from spec Part 0)
 
@@ -58,7 +59,17 @@ Run from the repo root. pnpm is pinned in `package.json` (`packageManager`); on 
 
 First-time setup: copy `apps/mobile/.env.example` → `apps/mobile/.env.local` and `apps/web/.env.example` → `apps/web/.env.local`.
 
-Later slices add: `supabase start`, `supabase db reset`, `pnpm --filter ingest run osm`.
+**Database** (Supabase CLI pinned as a root devDependency; the repo is linked to `089-dev`, ref `bjvnohtevuurkqjcyxzh`; needs `npx supabase login` once per machine):
+
+| Command                             | What it does                                                                               |
+| ----------------------------------- | ------------------------------------------------------------------------------------------ |
+| `npx supabase migration new <name>` | New empty migration file (then write the SQL by hand)                                      |
+| `corepack pnpm db:push`             | Apply new migrations to `089-dev`                                                          |
+| `corepack pnpm db:test`             | Run the pgTAP tests against `089-dev`, rolled back (no Docker needed)                      |
+| `corepack pnpm db:types`            | Regenerate `packages/db/src/database.types.ts` from `089-dev` (commit it; CI checks drift) |
+| `npx supabase db advisors --linked` | Supabase's security/performance linter; keep it at "No issues found"                       |
+
+With Docker: `supabase start` (applies migrations + `seed.sql` fixtures), `supabase test db`. Later slices add `pnpm --filter ingest run osm`.
 
 ## Layout
 
@@ -93,4 +104,8 @@ Later slices add: `supabase start`, `supabase db reset`, `pnpm --filter ingest r
 - MapLibre RN doesn't run in Expo Go or on web; `CityMap.tsx` checks `isExpoGo`, `CityMap.web.tsx` is the web fallback.
 - `expo-dev-client` is **not** installed (ADR-026): with it, `npx expo start` makes a dev-build QR code that Expo Go can't open. Re-add it only for an EAS development build.
 - Root scripts that call `pnpm` internally fail in the owner's terminal (global pnpm not on PATH). Give the owner `npx expo …` commands run inside `apps/mobile`.
+- `supabase test db` needs Docker even with `--linked`; use `pnpm db:test`, which sends each test file as one rolled-back DO block. Test files must end every statement with `;` at the end of a line.
+- RLS policies: one permissive policy per role and action. Write staff policies as separate insert/update/delete policies, never `for all` (it also covers SELECT; advisor 0006).
+- Migrations already pushed to `089-dev` are never edited: fix forward with a new migration.
+- `supabase gen types` output is excluded from Prettier; CI compares it ignoring the `PostgrestVersion` line (hosted and local PostgREST differ).
 - `git config core.longpaths true` is set: some react-native paths in `node_modules` exceed Windows' 260-char limit.
