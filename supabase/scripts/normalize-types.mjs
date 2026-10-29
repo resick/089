@@ -15,9 +15,10 @@ import { format, resolveConfig } from 'prettier';
 const file = process.argv[2];
 const source = readFileSync(file, 'utf8')
   .replace(/__InternalSupabase:\s*\{[^}]*\}/, '')
-  .replace(/^\s*\/\/.*$/gm, '')
+  // Whole lines, newline included: Prettier keeps blank lines.
+  .replace(/^[ \t]*\/\/.*\r?\n/gm, '')
   .replace(/NonNullable<Json>/g, 'Json')
-  .replace(/^\s*ComputedFields: never;?\s*$/gm, '');
+  .replace(/^[ \t]*ComputedFields: never;?[ \t]*\r?\n/gm, '');
 
 // Resolved from this script's location: the input may live outside the repo.
 const config = (await resolveConfig(fileURLToPath(import.meta.url))) ?? {};
