@@ -18,7 +18,10 @@ const source = readFileSync(file, 'utf8')
   // Whole lines, newline included: Prettier keeps blank lines.
   .replace(/^[ \t]*\/\/.*\r?\n/gm, '')
   .replace(/NonNullable<Json>/g, 'Json')
-  .replace(/^[ \t]*ComputedFields: never;?[ \t]*\r?\n/gm, '');
+  .replace(/^[ \t]*ComputedFields: never;?[ \t]*\r?\n/gm, '')
+  // Prettier keeps an object expanded if the input breaks after `{`, so the
+  // two generators' layouts would survive formatting. Collapse first.
+  .replace(/\{\s*\r?\n\s*/g, '{ ');
 
 // Resolved from this script's location: the input may live outside the repo.
 const config = (await resolveConfig(fileURLToPath(import.meta.url))) ?? {};
