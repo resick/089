@@ -75,13 +75,14 @@ jobs:
       # from scratch: proves `supabase db reset` reproduces the schema.
       - run: pnpm exec supabase db start
       - run: pnpm exec supabase test db
-      # The committed types come from the hosted project, whose PostgREST
-      # version differs from the local image's, so that one line is ignored.
+      # The committed types come from the hosted project, whose generator
+      # formats differently from the local one: compare normalised copies.
       - name: Generated types match the schema
         run: |
           pnpm exec supabase gen types typescript --local --schema public > /tmp/database.types.ts
-          if ! diff -u <(grep -v PostgrestVersion packages/db/src/database.types.ts) \
-                       <(grep -v PostgrestVersion /tmp/database.types.ts) > /tmp/types.diff; then
+          node supabase/scripts/normalize-types.mjs packages/db/src/database.types.ts > /tmp/committed.ts
+          node supabase/scripts/normalize-types.mjs /tmp/database.types.ts > /tmp/generated.ts
+          if ! diff -u /tmp/committed.ts /tmp/generated.ts > /tmp/types.diff; then
             { echo '### Generated types differ from packages/db (run `pnpm db:types` and commit)'
               echo '```diff'; head -c 60000 /tmp/types.diff; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
             cat /tmp/types.diff
