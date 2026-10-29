@@ -85,5 +85,7 @@ jobs:
             { echo '### Generated types differ from packages/db (run `pnpm db:types` and commit)'
               echo '```diff'; head -c 60000 /tmp/types.diff; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
             cat /tmp/types.diff
+            # Annotations are visible on the run page without signing in.
+            echo "::error title=Type drift::$(head -n 60 /tmp/types.diff | sed ':a;N;$!ba;s/%/%25/g;s/\r/%0D/g;s/\n/%0A/g')"
             exit 1
           fi
