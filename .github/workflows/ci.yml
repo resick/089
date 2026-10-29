@@ -80,5 +80,10 @@ jobs:
       - name: Generated types match the schema
         run: |
           pnpm exec supabase gen types typescript --local --schema public > /tmp/database.types.ts
-          diff <(grep -v PostgrestVersion packages/db/src/database.types.ts) \
-               <(grep -v PostgrestVersion /tmp/database.types.ts)
+          if ! diff -u <(grep -v PostgrestVersion packages/db/src/database.types.ts) \
+                       <(grep -v PostgrestVersion /tmp/database.types.ts) > /tmp/types.diff; then
+            { echo '### Generated types differ from packages/db (run `pnpm db:types` and commit)'
+              echo '```diff'; head -c 60000 /tmp/types.diff; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+            cat /tmp/types.diff
+            exit 1
+          fi
