@@ -112,7 +112,11 @@
   },
   "category": {
     "emptyTitle": "No places yet",
-    "emptyBody": "Munich's places from OpenStreetMap arrive with roadmap slice {{slice}}."
+    "emptyBody": "Munich's places from OpenStreetMap arrive with roadmap slice {{slice}}.",
+    "all": "All",
+    "emptyTitleIn": "{{name}}: no places yet",
+    "filterA11y": "Filter by type",
+    "loadError": "Couldn't load the types of places."
   },
   "events": {
     "title": "Events",

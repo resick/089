@@ -112,7 +112,11 @@
   },
   "category": {
     "emptyTitle": "Noch keine Orte",
-    "emptyBody": "Die Münchner Orte aus OpenStreetMap kommen mit Abschnitt {{slice}} der Roadmap."
+    "emptyBody": "Die Münchner Orte aus OpenStreetMap kommen mit Abschnitt {{slice}} der Roadmap.",
+    "all": "Alle",
+    "emptyTitleIn": "{{name}}: noch keine Orte",
+    "filterA11y": "Nach Art filtern",
+    "loadError": "Die Arten von Orten konnten nicht geladen werden."
   },
   "events": {
     "title": "Events",

@@ -30,6 +30,7 @@ City discovery app, Munich first. Product spec: `docs/PRODUCT_SPEC.md`. Planning
 - Gallery and tests use obvious fixtures from `src/features/gallery/fixtures.ts`.
 - Screens use `<Screen>` (safe area, gutter, section rhythm). Until a feature has real data, it shows a designed `EmptyState` saying which roadmap slice brings it: never fake content.
 - External API responses are zod-validated at the boundary (see `features/weather/brightSky.ts`).
+- Public database reads go through `supabaseGet` (`src/lib/supabaseRest.ts`, plain fetch + publishable key) and are zod-validated (see `features/categories/categories.ts`); supabase-js arrives with sign-in in slice 11. Translatable DB text is parsed with `i18nTextSchema` and shown with `pickLocale` from `@089/core`.
 - All user-facing strings go through i18n (`de` and `en` both required; CI checks for missing keys).
 - Timestamps are `timestamptz`; city-time logic uses the city's timezone (`Europe/Berlin`), never the device's.
 - Business logic with ranking/geo/time lives in versioned Postgres RPCs (`*_v1`). Clients don't compose complex queries.

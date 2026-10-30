@@ -1,4 +1,4 @@
-import { CITY_TIMEZONE, dayPartAt } from '@089/core';
+import { CITY_TIMEZONE, dayPartAt, pickLocale } from '@089/core';
 import { router } from 'expo-router';
 import { Palette } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
@@ -15,16 +15,29 @@ import {
   Text,
 } from '@/design/components';
 import { makeStyles } from '@/design/theme';
+import { useCategoryGroups, useContentLocale } from '@/features/categories/useCategoryGroups';
 import { env } from '@/lib/env';
 import { useNow } from '@/lib/useNow';
 
 import { NowCard } from './NowCard';
+
+const SUBTITLE_ITEMS = 3;
 
 export function ExploreScreen() {
   const { t } = useTranslation();
   const styles = useStyles();
   const now = useNow();
   const greeting = t(`explore.greeting.${dayPartAt(now, CITY_TIMEZONE)}`);
+  const locale = useContentLocale();
+  // Tiles work without the database (labels and icons are bundled); the
+  // subtitle listing what's inside appears once the taxonomy has loaded.
+  const { data: groups } = useCategoryGroups();
+  const subtitleFor = (token: string) =>
+    groups
+      ?.find((group) => group.slug === token)
+      ?.subcategories.slice(0, SUBTITLE_ITEMS)
+      .map((sub) => pickLocale(sub.name, locale))
+      .join(' · ');
 
   return (
     <Screen>
@@ -48,6 +61,7 @@ export function ExploreScreen() {
               <CategoryTile
                 category={token}
                 label={t(`categories.${token}`)}
+                subtitle={subtitleFor(token)}
                 onPress={() =>
                   router.push({ pathname: '/category/[slug]', params: { slug: token } })
                 }

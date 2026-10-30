@@ -32,3 +32,6 @@ export const categoryIcons: Record<CategoryColorToken, LucideIcon> = {
 };
 
 export const CATEGORY_TOKENS = Object.keys(categoryIcons) as CategoryColorToken[];
+
+export const isCategoryToken = (value: unknown): value is CategoryColorToken =>
+  typeof value === 'string' && (CATEGORY_TOKENS as string[]).includes(value);

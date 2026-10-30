@@ -10,6 +10,7 @@ import i18n from '@/lib/i18n';
 import { ThemeOverride } from '../theme';
 import {
   Button,
+  CategoryTile,
   Chip,
   CollectionCard,
   ErrorState,
@@ -160,6 +161,22 @@ describe('ThemeOverride', () => {
     );
     expect(screen.getByText('light')).toHaveStyle({ color: palette.light.text });
     expect(screen.getByText('dark')).toHaveStyle({ color: palette.dark.text });
+  });
+});
+
+describe('CategoryTile', () => {
+  it('reads label and subtitle together to screen readers', async () => {
+    const onPress = jest.fn();
+    await render(
+      <CategoryTile
+        category="food"
+        label="Test Category"
+        subtitle="Test Sub A · Test Sub B"
+        onPress={onPress}
+      />,
+    );
+    await fireEvent.press(screen.getByLabelText('Test Category: Test Sub A · Test Sub B'));
+    expect(onPress).toHaveBeenCalledTimes(1);
   });
 });
 
