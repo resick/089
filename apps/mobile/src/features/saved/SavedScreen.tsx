@@ -18,7 +18,7 @@ export function SavedScreen() {
         icon={Bookmark}
         title={t('saved.emptyTitle')}
         body={t('saved.emptyBody', { slice: 11 })}
-        action={{ label: t('saved.browse'), onPress: () => router.navigate('/') }}
+        action={{ label: t('saved.browse'), onPress: () => router.navigate('/explore') }}
       />
     </Screen>
   );

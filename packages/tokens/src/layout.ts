@@ -19,9 +19,9 @@ export type SpaceToken = keyof typeof space;
 
 export const radius = {
   none: 0,
-  sm: 6,
-  md: 12,
-  lg: 20,
+  sm: 8,
+  md: 16,
+  lg: 24,
   full: 9999,
 } as const;
 

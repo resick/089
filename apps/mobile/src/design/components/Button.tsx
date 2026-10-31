@@ -35,7 +35,8 @@ export function Button({
   const styles = useStyles();
   const theme = useTheme();
   const fg = {
-    primary: 'onAccent',
+    // Monochrome primary (ADR-033): gold is kept for selection and the brand.
+    primary: 'bg',
     secondary: 'text',
     ghost: 'accentText',
     destructive: 'danger',
@@ -74,12 +75,8 @@ const useStyles = makeStyles((t) => ({
   },
   lg: { minHeight: MIN_TOUCH_TARGET + t.space.xs, paddingHorizontal: t.space.xl },
   full: { alignSelf: 'stretch' },
-  primary: { backgroundColor: t.colors.accent },
-  secondary: {
-    backgroundColor: t.colors.surface,
-    borderWidth: t.hairline,
-    borderColor: t.colors.border,
-  },
+  primary: { backgroundColor: t.colors.text },
+  secondary: { backgroundColor: t.colors.fill },
   ghost: { backgroundColor: 'transparent', paddingHorizontal: t.space.xs },
   destructive: {
     backgroundColor: 'transparent',

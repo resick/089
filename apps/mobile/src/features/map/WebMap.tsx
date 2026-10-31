@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 import { useTheme } from '@/design/theme';
@@ -16,12 +16,15 @@ import { useMapStyle } from './useMapStyle';
 export function WebMap() {
   const { t } = useTranslation();
   const theme = useTheme();
-  const styleUrl = useMapStyle();
+  const style = useMapStyle();
   const html = useMemo(
     () =>
-      buildMapHtml({ styleUrl, center: MUNICH_CENTER, zoom: 12.5, background: theme.colors.bg }),
-    [styleUrl, theme.colors.bg],
+      style &&
+      buildMapHtml({ style, center: MUNICH_CENTER, zoom: 13, background: theme.colors.bg }),
+    [style, theme.colors.bg],
   );
+  // Until our style is ready: the page colour, so the map fades in once.
+  if (!html) return <View style={[styles.map, { backgroundColor: theme.colors.bg }]} />;
   return (
     <WebView
       source={{ html }}

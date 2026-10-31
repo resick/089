@@ -1,34 +1,38 @@
 # 089 — Design System
 
-**Direction:** dark-first, image-led when we have images, typography-led when we don't. Munich's civic colours are **black and gold**, so the brand is near-black surfaces with one gold accent. It reads as local without folklore (no lederhosen, no blue-white diamonds).
+> **Updated 2026-10-31 (ADR-033):** monochrome Apple-like neutrals, larger radii (8/16/24, continuous corners), 1.75 icon strokes, gold only for the wordmark and selected states, category colours only on map pins and the no-photo header, frosted glass only for controls over the map.
+
+**Direction:** dark-first, image-led when we have images, typography-led when we don't. Quiet and monochrome, in the spirit of Apple's own apps. Munich's civic colours are **black and gold**, so the brand is black surfaces with one sparing gold accent. It reads as local without folklore (no lederhosen, no blue-white diamonds).
 
 Tokens live in `packages/tokens` (TypeScript), are exported to the mobile theme hooks and to web CSS variables. Components never use raw values.
 
 ## 1. Colour
 
-All pairs below were checked for WCAG contrast (script run 2026-10-28). Text pairs ≥ 4.5:1, icons/pins ≥ 3:1.
+All pairs below were checked for WCAG contrast (`colors.test.ts`, values from 2026-10-31). Text pairs ≥ 4.5:1, icons/pins ≥ 3:1.
 
 ### Neutrals & semantic
 
 | Token                   | Dark              | Light                                 | Notes                                                                                         |
 | ----------------------- | ----------------- | ------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `bg`                    | `#0B0B0C`         | `#FFFFFF`                             | App background                                                                                |
-| `surface`               | `#161618`         | `#F4F4F5`                             | Sheets, grouped rows                                                                          |
-| `surfaceRaised`         | `#1E1E21`         | `#FFFFFF`                             | Only for overlays (sheet, menu). Shadow in light mode, lighter colour in dark                 |
-| `border`                | `#2A2A2E`         | `#E4E4E7`                             | Hairlines only                                                                                |
-| `text`                  | `#F4F4F5` (17.9)  | `#0B0B0C` (19.7)                      | Contrast vs `bg` in brackets                                                                  |
-| `textSecondary`         | `#A1A1AA` (7.7)   | `#52525B` (7.7)                       |                                                                                               |
-| `textTertiary`          | `#8B8B94` (5.8)   | `#6B6B74` (5.3 / 4.8 on surface)      | Metadata. Still AA                                                                            |
-| `accent`                | `#F5C400` (12.0)  | `#F5C400` fill / `#8A6A00` text (5.1) | "Munich gold". Fill uses `onAccent` text                                                      |
-| `onAccent`              | `#0B0B0C`         | `#0B0B0C`                             | 12.0 on accent                                                                                |
-| `danger`                | `#FF6B6B` (7.1)   | `#C62828` (5.6)                       |                                                                                               |
-| `success` / open        | `#3DD68C` (10.5)  | `#1B7F4B` (5.0)                       | "Open" status                                                                                 |
-| `warning` / closes soon | `#F5C400`         | `#8A6A00`                             | Shares accent hue on purpose: attention                                                       |
+| `bg`                    | `#000000`         | `#F5F5F7`                             | App background                                                                                |
+| `surface`               | `#1C1C1E`         | `#FFFFFF`                             | Cards, tiles, grouped rows                                                                    |
+| `surfaceRaised`         | `#2C2C2E`         | `#FFFFFF`                             | Only for overlays (sheet, menu). Shadow in light mode, lighter colour in dark                 |
+| `border`                | `#38383A`         | `#E0E0E5`                             | Hairlines only                                                                                |
+| `text`                  | `#F5F5F7` (19.3)  | `#1D1D1F` (15.5)                      | Contrast vs `bg` in brackets                                                                  |
+| `textSecondary`         | `#AEAEB2` (9.5)   | `#48484A` (8.4)                       |                                                                                               |
+| `textTertiary`          | `#8E8E93` (6.4)   | `#6E6E73` (4.7 / 5.1 on surface)      | Metadata. Still AA                                                                            |
+| `accent`                | `#F5C400` (12.8)  | `#F5C400` fill / `#806200` text (5.3) | "Munich gold": wordmark and selected states only. Fill uses `onAccent` text                   |
+| `onAccent`              | `#000000`         | `#1D1D1F`                             | 12.8 / 10.2 on accent                                                                         |
+| `danger`                | `#FF6961` (7.4)   | `#D70015` (4.9)                       |                                                                                               |
+| `success` / open        | `#30D158` (10.4)  | `#1B7F4B` (4.6)                       | "Open" status                                                                                 |
+| `warning` / closes soon | `#F5C400`         | `#806200`                             | Shares accent hue on purpose: attention                                                       |
+| `fill`                  | `#2C2C2E`         | `#E9E9EE`                             | Icon wells, unselected chips, secondary buttons                                               |
+| `glass`                 | `#1C1C1E` at 72%  | `#FFFFFF` at 78%                      | `GlassView` over the map only, behind a blur                                                  |
 | `scrim`                 | `rgba(0,0,0,.55)` | `rgba(0,0,0,.35)`                     | Behind sheets, and on image text overlays (≥ 4.5 guaranteed by gradient-free 55% scrim bands) |
 
-**Accent use rule:** one gold element per screen region: the primary button, the selected tab, or the "open now" emphasis. Never gold text on a light background except `accentText`.
+**Accent use rule:** gold marks the wordmark and what is selected (a filter chip, a toggle), nothing else. Primary buttons are monochrome (`text` fill, `bg` label) and the selected tab is full-strength `text`. Never gold text on a light background except `accentText`.
 
-### Category colours (pins, chips, the typographic header only)
+### Category colours (map pins and the no-photo header only)
 
 | Category                 | Dark (vs bg)   | Light (vs white) |
 | ------------------------ | -------------- | ---------------- |
@@ -43,7 +47,11 @@ All pairs below were checked for WCAG contrast (script run 2026-10-28). Text pai
 | Wellness                 | `#8FD9C3` 12.1 | `#0F766E` 5.5    |
 | Events                   | `#F5C400` 12.0 | `#8A6A00` 5.1    |
 
-Pin glyphs: `#0B0B0C` on the dark variant, white on the light variant (all ≥ 4.9:1). **Colour is never the only signal.** Every pin and chip also carries the category icon.
+Pin glyphs: `#0B0B0C` on the dark variant, white on the light variant (all ≥ 4.9:1). **Colour is never the only signal.** Every pin also carries the category icon. Tiles and chips are monochrome (ADR-033).
+
+### Basemap
+
+`mapPalette` in `packages/tokens`: a quiet monochrome city (water and parks only hinted at) applied to OpenFreeMap's styles by `restyleBasemap`, with 3D buildings from zoom 15. Labels pass 4.5:1 on land.
 
 ## 2. Typography
 
@@ -64,7 +72,7 @@ Pin glyphs: `#0B0B0C` on the dark variant, white on the light variant (all ≥ 4
 ## 3. Spacing, radius, elevation
 
 - **Spacing (4pt base):** `0, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64`. Screen gutter 16 (phones) / 24 (tablets). Section gap 32.
-- **Radius:** `none 0`, `sm 6` (chips, inputs), `md 12` (cards, images), `lg 20` (sheets' top corners), `full` (pills, avatars). **Only one rounded container level**: a card is never inside another rounded box.
+- **Radius:** `none 0`, `sm 8` (inputs), `md 16` (cards, tiles, images), `lg 24` (hero cards, sheets' top corners), `full` (pills, chips, avatars). Cards use `borderCurve: 'continuous'` (Apple's squircle corners on iOS). **Only one rounded container level**: a card is never inside another rounded box.
 - **Elevation:** dark mode uses surface colour steps (`bg → surface → surfaceRaised`), no shadows. Light mode adds a single soft shadow (`0 4 16 rgba(0,0,0,.08)`) only for floating elements (sheet, map buttons, toast).
 - **Touch targets:** ≥ 44×44pt, even when the visual element is smaller (hitSlop).
 
@@ -100,7 +108,7 @@ Built in this order and shown in the gallery in every state (default, pressed, d
 
 ## 7. Avoid (from spec, enforced in review)
 
-Heavy gradients · glassmorphism/blur panels · card-in-card · more than one rounded container level · generic AI illustrations (empty states use one line icon) · decorative animation · more than one accent element per region · category colours outside pins/chips/headers.
+Heavy gradients · glassmorphism/blur panels (exception since ADR-033: `GlassView` for controls floating over the map) · card-in-card · more than one rounded container level · generic AI illustrations (empty states use one line icon) · decorative animation · more than one accent element per region · category colours outside pins and the no-photo header.
 
 ## 8. Accessibility checklist (per component PR)
 

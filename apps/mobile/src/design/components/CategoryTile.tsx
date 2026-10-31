@@ -2,7 +2,7 @@ import type { CategoryColorToken } from '@089/tokens';
 import { View } from 'react-native';
 
 import { categoryIcons } from '../categories';
-import { makeStyles, useTheme } from '../theme';
+import { makeStyles } from '../theme';
 import { Icon } from './Icon';
 import { PressableArea } from './PressableArea';
 import { Text } from './Text';
@@ -18,17 +18,15 @@ type Props = {
 /** Entry into a top-level category, used in Explore's category grid. */
 export function CategoryTile({ category, label, subtitle, onPress }: Props) {
   const styles = useStyles();
-  const theme = useTheme();
-  const tint = theme.category(category);
   return (
     <PressableArea
       onPress={onPress}
       accessibilityLabel={subtitle ? `${label}: ${subtitle}` : label}
       style={styles.tile}
     >
-      <View style={[styles.badge, { backgroundColor: tint }]}>
-        {/* bg is near-black in dark mode and white in light mode: the pin-glyph pairs from DESIGN_SYSTEM §1. */}
-        <Icon icon={categoryIcons[category]} size="md" color="bg" />
+      {/* Monochrome icon well (ADR-033): category colours stay on map pins. */}
+      <View style={styles.badge}>
+        <Icon icon={categoryIcons[category]} size="md" color="text" />
       </View>
       <View style={styles.text}>
         <Text variant="callout" numberOfLines={2}>
@@ -49,17 +47,19 @@ const useStyles = makeStyles((t) => ({
     flex: 1,
     // Room for the subtitle from the start, so tiles don't grow once it loads.
     minHeight: 128,
-    padding: t.space.sm,
+    padding: t.space.md,
     gap: t.space.xs,
     borderRadius: t.radius.md,
+    borderCurve: 'continuous',
     backgroundColor: t.colors.surface,
     justifyContent: 'space-between',
   },
   text: { gap: t.space.xxs },
   badge: {
-    width: 36,
-    height: 36,
+    width: 40,
+    height: 40,
     borderRadius: t.radius.full,
+    backgroundColor: t.colors.fill,
     alignItems: 'center',
     justifyContent: 'center',
   },

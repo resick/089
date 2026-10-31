@@ -6,7 +6,13 @@
     "saved": "Saved"
   },
   "map": {
-    "a11yLabel": "Map of Munich"
+    "a11yLabel": "Map of Munich",
+    "search": "Search Munich",
+    "filtersA11y": "Show on the map",
+    "filtersError": "Couldn't load categories. Try again",
+    "emptyTitle": "No places on the map yet",
+    "emptyTitleFiltered": "No {{category}} on the map yet",
+    "emptyBody": "Real Munich places arrive with the data import. Until then the map stays empty rather than showing made-up pins."
   },
   "categories": {
     "food": "Food & Drinks",

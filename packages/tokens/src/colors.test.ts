@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { categoryColors, palette, type ColorScheme } from './colors';
+import { categoryColors, mapPalette, palette, type ColorScheme } from './colors';
 import { contrastRatio } from './contrast';
 
 const schemes: ColorScheme[] = ['dark', 'light'];
@@ -44,5 +44,13 @@ describe('contrastRatio', () => {
 
   it('rejects malformed colours', () => {
     expect(() => contrastRatio('#FFF', '#000000')).toThrow(/#RRGGBB/);
+  });
+});
+
+describe('map palette', () => {
+  it.each(schemes)('%s: labels stay legible on land', (scheme) => {
+    const m = mapPalette[scheme];
+    expect(contrastRatio(m.label, m.land)).toBeGreaterThanOrEqual(TEXT_MIN);
+    expect(contrastRatio(m.labelStrong, m.land)).toBeGreaterThanOrEqual(TEXT_MIN);
   });
 });

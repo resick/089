@@ -4,6 +4,9 @@ import { View } from 'react-native';
 
 import { useTheme } from '../theme';
 
+/** Thin, even strokes in the spirit of SF Symbols (ADR-033). */
+export const ICON_STROKE = 1.75;
+
 export const iconSizes = { sm: 16, md: 20, lg: 24, xl: 32 } as const;
 export type IconSize = keyof typeof iconSizes;
 
@@ -30,7 +33,7 @@ export function Icon({ icon: Glyph, size = 'md', color = 'text', accessibilityLa
       accessibilityElementsHidden={decorative}
       importantForAccessibility={decorative ? 'no-hide-descendants' : 'yes'}
     >
-      <Glyph size={iconSizes[size]} color={resolved} strokeWidth={2} />
+      <Glyph size={iconSizes[size]} color={resolved} strokeWidth={ICON_STROKE} />
     </View>
   );
 }

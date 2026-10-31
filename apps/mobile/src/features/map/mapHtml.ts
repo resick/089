@@ -1,5 +1,7 @@
 import type { LngLat } from '@maplibre/maplibre-react-native';
 
+import type { BasemapStyle } from './basemapStyle';
+
 // MapLibre GL JS for places without the native module (Expo Go, web preview).
 // v5 ships one UMD file with its worker inlined, which matters inside a
 // WebView/iframe with no origin: v6 loads a separate cross-origin worker.
@@ -7,7 +9,8 @@ export const MAPLIBRE_GL_VERSION = '5.24.0';
 const CDN = `https://unpkg.com/maplibre-gl@${MAPLIBRE_GL_VERSION}/dist`;
 
 type Options = {
-  styleUrl: string;
+  /** Our restyled style object, or a style URL as the fallback. */
+  style: BasemapStyle | string;
   center: LngLat;
   zoom: number;
   /** Page colour shown before tiles load, so there is no white flash. */
@@ -17,7 +20,7 @@ type Options = {
 const json = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
 
 /** Self-contained HTML page rendering one full-screen map. */
-export function buildMapHtml({ styleUrl, center, zoom, background }: Options): string {
+export function buildMapHtml({ style, center, zoom, background }: Options): string {
   return `<!doctype html>
 <html>
 <head>
@@ -35,7 +38,7 @@ export function buildMapHtml({ styleUrl, center, zoom, background }: Options): s
 <script>
   new maplibregl.Map({
     container: 'map',
-    style: ${json(styleUrl)},
+    style: ${json(style)},
     center: ${json(center)},
     zoom: ${json(zoom)},
     attributionControl: { compact: true },

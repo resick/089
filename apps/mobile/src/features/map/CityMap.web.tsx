@@ -11,12 +11,14 @@ import { useMapStyle } from './useMapStyle';
 export function CityMap() {
   const { t } = useTranslation();
   const theme = useTheme();
-  const styleUrl = useMapStyle();
+  const style = useMapStyle();
   const html = useMemo(
     () =>
-      buildMapHtml({ styleUrl, center: MUNICH_CENTER, zoom: 12.5, background: theme.colors.bg }),
-    [styleUrl, theme.colors.bg],
+      style &&
+      buildMapHtml({ style, center: MUNICH_CENTER, zoom: 13, background: theme.colors.bg }),
+    [style, theme.colors.bg],
   );
+  if (!html) return <div style={{ flex: 1, backgroundColor: theme.colors.bg }} />;
   return (
     <iframe
       title={t('map.a11yLabel')}

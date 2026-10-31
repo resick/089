@@ -7,6 +7,7 @@ City discovery app, Munich first. Product spec: `docs/PRODUCT_SPEC.md`. Planning
 - Planning docs approved 2026-10-28. Building Phase 1 slice by slice in the order of `docs/ROADMAP.md`, **stopping for the owner's review after each slice**.
 - Slices 1 (scaffold) and 2 (design system) done and committed. Since then: designed Explore (live clock + DWD weather + categories), Events (day strip), Saved, Search and category screens with honest empty states, and a real map in Expo Go (ADR-028/029).
 - Slice 3 (database core) built 2026-10-29, pending review: migrations in `supabase/migrations`, pushed to the hosted project `089-dev` (ADR-030/031); 56 pgTAP tests pass there. Places stay empty until slice 4 (ingestion). Code is on GitHub: `resick/089` (private).
+- 2026-10-31, owner decisions (ADR-032/033): the **map is the home screen** with floating category quick filters; **monochrome Apple-like redesign**; roadmap order is now map + look → slice 4 real places → accounts (email code, Apple, Google; profiles) → full reviews + user/business place suggestions via an editor queue. Map-first + redesign built, pending review.
 - Next: slice 4 (ingestion pipeline), after the owner's review.
 
 ## How to work here (from spec Part 0)
@@ -25,7 +26,8 @@ City discovery app, Munich first. Product spec: `docs/PRODUCT_SPEC.md`. Planning
 
 - TypeScript strict everywhere; no `any` (use `unknown` + zod). Shared schemas/types in `packages/core`; DB types generated into `packages/db` (never hand-edited).
 - **Expo Go compatibility (ADR-025):** only use native modules that Expo Go includes. Anything else (today: MapLibre) is lazy-loaded behind `isExpoGo` from `src/lib/runtime.ts` with a designed fallback, and gets a test proving it isn't loaded in Expo Go (see `CityMap.test.tsx`).
-- Styling only through design tokens (`packages/tokens`); no raw colours/sizes in components. Build screens from `@/design/components`; style with `makeStyles((t) => …)` from `@/design/theme`; render text only with `<Text variant color>`.
+- Styling only through design tokens (`packages/tokens`); no raw colours/sizes in components. Look (ADR-033): monochrome; gold only for the wordmark and selected states; category colours only on map pins and the no-photo header; `GlassView` (frosted) only for controls floating over the map; cards use `borderCurve: 'continuous'`.
+- The basemap is OpenFreeMap restyled in code (`features/map/basemapStyle.ts` + `mapPalette` tokens): change map colours there, not in the style URL. Build screens from `@/design/components`; style with `makeStyles((t) => …)` from `@/design/theme`; render text only with `<Text variant color>`.
 - A pressable never contains another pressable (DESIGN_SYSTEM §5). Put secondary actions (Save) beside the card's pressable area.
 - Gallery and tests use obvious fixtures from `src/features/gallery/fixtures.ts`.
 - Screens use `<Screen>` (safe area, gutter, section rhythm). Until a feature has real data, it shows a designed `EmptyState` saying which roadmap slice brings it: never fake content.

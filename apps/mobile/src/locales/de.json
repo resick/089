@@ -6,7 +6,13 @@
     "saved": "Gespeichert"
   },
   "map": {
-    "a11yLabel": "Karte von München"
+    "a11yLabel": "Karte von München",
+    "search": "München durchsuchen",
+    "filtersA11y": "Auf der Karte zeigen",
+    "filtersError": "Kategorien nicht geladen. Erneut versuchen",
+    "emptyTitle": "Noch keine Orte auf der Karte",
+    "emptyTitleFiltered": "Noch keine {{category}} auf der Karte",
+    "emptyBody": "Echte Münchner Orte kommen mit dem Datenimport. Bis dahin bleibt die Karte leer, statt erfundene Pins zu zeigen."
   },
   "categories": {
     "food": "Essen & Trinken",
